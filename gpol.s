@@ -1,5 +1,6 @@
 * Get_prefix
-* if empyy : online
+* if prefix is empyy, get it with an online call
+* with last drive used.
 cout        equ $FDED
 MLI         equ $bf00
 getprefix   equ $c7
@@ -7,7 +8,7 @@ online      equ $c5
 prntx       equ $F944
 buffer      equ $300
 buffer1     equ $5000
-devnum      equ $BF30   ; last used device DSSS0000
+devnum      equ $BF30   ; last used device DSSS0000 !!!
 *
 *
 ********** Macros **********
@@ -35,12 +36,13 @@ cr      MAC
         print gpOK
         ldx buffer
         beq empty       ; empty prefix ?
-        jmp pfxok       ; no : message and exit
+        print pfok      ; no : message 
+        rts             ; and exit
         *
 empty   nop
         print isempty
         lda devnum      ; yes : call online
-        sta c5_parms+1
+        sta c5_parms+1  ; this is the trick  
         jsr    MLI
         dfb online
         da  c5_parms
@@ -52,9 +54,9 @@ empty   nop
         tax
         inx             ; for "/"
         lda #$2f        ; = "/"
-        sta buffer1
+        sta buffer1     ; before prefix
         ldy #$00
-prnpfx  lda buffer1,y
+prnpfx  lda buffer1,y   ; display /prefix
         ora #$80
         jsr cout
         iny
@@ -70,10 +72,6 @@ error   pha
         jsr prntx 
         cr
         rts
-
-pfxok   print pfok
-        rts
-
 
 ************** DATA **************
 
