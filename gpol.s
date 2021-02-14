@@ -72,9 +72,9 @@ error   pha
         jsr prntx 
         cr
         rts
-
+*        
 ************** DATA **************
-
+*
 c7_parms
     hex 01
     da buffer
