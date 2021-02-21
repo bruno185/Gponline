@@ -8,7 +8,7 @@ online      equ $c5
 prntx       equ $F944
 buffer      equ $300
 buffer1     equ $5000
-devnum      equ $BF30   ; last used device DSSS0000 !!!
+devnum      equ $BF30   ; last used device here, format : DSSS0000 
 *
 *
 ********** Macros **********
